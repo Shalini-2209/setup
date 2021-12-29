@@ -2,9 +2,9 @@ import React, { useState } from "react";
 import { View, Text, StyleSheet } from "react-native";
 import { TextInput, Button } from "react-native-paper";
 import database from "../storage/firebase";
-import { ref, onValue } from "firebase/database";
+import { ref, set } from "firebase/database";
 
-const Login = ({ logged, setLogged }) => {
+const Register = () => {
   const initialState = {
     email: "",
     pwd: "",
@@ -16,25 +16,15 @@ const Login = ({ logged, setLogged }) => {
     const id = form.email.split("@");
     const userId = id[0];
     const logRef = ref(database, "users/" + userId);
-    onValue(
-      logRef,
-      (snapshot) => {
-        if (snapshot.exists()) {
-          if (form.pwd === snapshot.val().pwd) {
-            console.log("Logged in successfully..");
-            setLogged(true);
-          } else setAlert("Invalid credentials..");
-        } else setAlert("User not found");
-      },
-      {
-        onlyOnce: true,
-      }
-    );
+
+    set(logRef, form).then(() => {
+      console.log("Registered");
+    });
   };
 
   return (
     <View style={styles.container}>
-      <Text>Login</Text>
+      <Text>Register</Text>
 
       <TextInput
         label="Email"
@@ -55,7 +45,7 @@ const Login = ({ logged, setLogged }) => {
         style={{ width: "50%", padding: 3, marginTop: 5 }}
         onPress={handlePress}
       >
-        Login
+        Register
       </Button>
     </View>
   );
@@ -73,4 +63,4 @@ const styles = StyleSheet.create({
   },
 });
 
-export default Login;
+export default Register;

@@ -12,7 +12,7 @@ const HomeScreen = ({ navigation }) => {
   return (
     <View>
       <Text onPress={() => navigation.push("Login")}>Sign In</Text>
-      <Text onPress={handlePress}>Sign Up</Text>
+      <Text onPress={() => navigation.push("Register")}>Sign Up</Text>
     </View>
   );
 };
