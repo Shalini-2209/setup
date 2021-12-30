@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import { View, Text, StyleSheet } from "react-native";
-import { TextInput, Button } from "react-native-paper";
+import { TextInput, Button, Title } from "react-native-paper";
 import database from "../storage/firebase";
 import { ref, onValue } from "firebase/database";
 
@@ -11,25 +11,29 @@ const Login = ({ logged, setLogged }) => {
   };
 
   const [form, setForm] = useState(initialState);
+  const [alert, setAlert] = useState("");
 
   const handlePress = () => {
-    const id = form.email.split("@");
-    const userId = id[0];
-    const logRef = ref(database, "users/" + userId);
-    onValue(
-      logRef,
-      (snapshot) => {
-        if (snapshot.exists()) {
-          if (form.pwd === snapshot.val().pwd) {
-            console.log("Logged in successfully..");
-            setLogged(true);
-          } else setAlert("Invalid credentials..");
-        } else setAlert("User not found");
-      },
-      {
-        onlyOnce: true,
-      }
-    );
+    if (form.email !== "" && form.pwd !== "") {
+      setAlert("");
+      const id = form.email.split("@");
+      const userId = id[0];
+      const logRef = ref(database, "users/" + userId);
+      onValue(
+        logRef,
+        (snapshot) => {
+          if (snapshot.exists()) {
+            if (form.pwd === snapshot.val().pwd) {
+              console.log("Logged in successfully..");
+              setLogged(true);
+            } else setAlert("Invalid credentials..");
+          } else setAlert("User not found");
+        },
+        {
+          onlyOnce: true,
+        }
+      );
+    } else setAlert("Encountered null values");
   };
 
   return (
@@ -49,6 +53,12 @@ const Login = ({ logged, setLogged }) => {
         style={styles.item}
         onChangeText={(text) => setForm({ ...form, pwd: text })}
       />
+
+      {alert && (
+        <Title style={{ color: "red", fontWeight: "bold", fontSize: 17 }}>
+          {alert}
+        </Title>
+      )}
 
       <Button
         mode="contained"

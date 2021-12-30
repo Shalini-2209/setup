@@ -2,8 +2,17 @@ import React, { useState } from "react";
 
 import { createBottomTabNavigator } from "@react-navigation/bottom-tabs";
 import { createStackNavigator } from "@react-navigation/stack";
-import { NavigationContainer } from "@react-navigation/native";
+import {
+  NavigationContainer,
+  DarkTheme as NavigateDarkTheme,
+} from "@react-navigation/native";
+
+// import {
+//   Provider as PaperProvider,
+//   DarkTheme as PaperDarkTheme,
+// } from "react-native-paper";
 import Login from "../screens/Login";
+import MainScreen from "../screens/MainScreen";
 import HomeScreen from "../screens/HomeScreen";
 import Register from "../screens/Register";
 
@@ -18,9 +27,6 @@ export default function AuthStack() {
       <HomeStack.Navigator>
         <HomeStack.Screen name="Home" component={HomeScreen} />
         <HomeStack.Screen name="Login" component={LoginWithProps} />
-        {/* options={({ route }) => ({
-          title: route.params.name
-        })} */}
         <HomeStack.Screen name="Register" component={Register} />
       </HomeStack.Navigator>
     );
@@ -31,6 +37,8 @@ export default function AuthStack() {
   };
 
   return (
+    // <PaperProvider theme={PaperDarkTheme}>
+    // <NavigationContainer theme={NavigateDarkTheme}>
     <NavigationContainer>
       <Tab.Navigator screenOptions={{ headerShown: false }}>
         {!logged ? (
@@ -40,5 +48,6 @@ export default function AuthStack() {
         )}
       </Tab.Navigator>
     </NavigationContainer>
+    // </PaperProvider>
   );
 }
