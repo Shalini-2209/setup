@@ -1,6 +1,5 @@
-import React from "react";
-import AuthStack from "./src/navigations/AuthStack";
+import RootStack from "./src/navigations/RootStack";
 
 export default function App() {
-  return <AuthStack />;
+  return <RootStack />;
 }
