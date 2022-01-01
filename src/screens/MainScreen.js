@@ -1,9 +1,11 @@
-import React from "react";
+import React, { useContext } from "react";
+import { UserContext } from "../contexts/UserProvider";
 import { Avatar, Button, Card, Title, Paragraph } from "react-native-paper";
 
 const LeftContent = (props) => <Avatar.Icon {...props} icon="folder" />;
 
 const MainScreen = () => {
+  const LoggedUser = useContext(UserContext);
   return (
     <>
       <Card>
@@ -13,7 +15,7 @@ const MainScreen = () => {
           left={LeftContent}
         />
         <Card.Content>
-          <Title>Card title</Title>
+          <Title>{LoggedUser}</Title>
           <Paragraph>Card content</Paragraph>
         </Card.Content>
         <Card.Cover source={{ uri: "https://picsum.photos/700" }} />
