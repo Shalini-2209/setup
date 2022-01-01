@@ -1,14 +1,9 @@
 import React from "react";
-import { ref, set } from "firebase/database";
-import database from "../storage/firebase";
 import { View, Image } from "react-native";
-import { Title } from "react-native-paper";
+import { Title, Switch } from "react-native-paper";
 
-const HomeScreen = ({ navigation }) => {
-  const handlePress = () => {
-    // const uref = ref(database, "users/");
-    // set(uref, { name: "shalini" });
-  };
+const HomeScreen = ({ toggleTheme, setToggleTheme, navigation }) => {
+  const onToggleSwitch = () => setToggleTheme(!toggleTheme);
 
   return (
     <View>
@@ -18,12 +13,19 @@ const HomeScreen = ({ navigation }) => {
           uri: "https://reactnative.dev/img/tiny_logo.png",
         }}
       /> */}
+
       <Title onPress={() => navigation.push("Login")}>Sign In</Title>
       <Title onPress={() => navigation.push("Register")}>Sign Up</Title>
+      <View style={{ flexDirection: "row" }}>
+        <Title>Toggle theme</Title>
+        <Switch
+          value={toggleTheme}
+          onValueChange={onToggleSwitch}
+          style={{ marginTop: 5, marginLeft: 6 }}
+        />
+      </View>
     </View>
   );
 };
 
 export default HomeScreen;
-
-
