@@ -13,13 +13,14 @@ const Register = () => {
   const [form, setForm] = useState(initialState);
 
   const handlePress = () => {
-    const id = form.email.split("@");
-    const userId = id[0];
-    const logRef = ref(database, "users/" + userId);
-
-    set(logRef, form).then(() => {
-      console.log("Registered");
-    });
+    if (form.email !== "" && form.pwd !== "") {
+      const id = form.email.split("@");
+      const userId = id[0];
+      const logRef = ref(database, "users/" + userId);
+      set(logRef, form).then(() => {
+        console.log("Registered");
+      });
+    } else console.error("Encountered null values");
   };
 
   return (
